@@ -1,0 +1,310 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<!--meta name="viewport" content="width=device-width, initial-scale=1.0"-->
+<style>
+body {
+  margin: 0;
+  font-family: "Lato", sans-serif;
+}
+.navbar {
+  overflow: hidden;
+  background-color: #333;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 50px
+}
+
+.navbar a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 15px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.sidebar {
+  margin: 0;
+  padding: 0;
+  width: 200px;
+  background-color: #606060;
+  position: fixed;
+  height:100%;
+  overflow: auto;
+}
+
+.sidebar a {
+  display: block;
+  color: white;
+  padding: 16px;
+  text-decoration: none;
+}
+ 
+.sidebar a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.sidebar a:hover:not(.active) {
+  background-color: #555;
+  color: white;
+}
+
+div.content {
+  margin-left: 200px;
+  padding:  1px;
+  height: 1000px;
+}
+
+@media screen and (max-width: 700px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+  .sidebar a {float: left;}
+  div.content {margin-left: 0;}
+}
+
+@media screen and (max-width: 400px) {
+  .sidebar a {
+    text-align: center;
+    float: none;
+  }
+}
+.container {
+  max-width: 400px;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+}
+
+#contact input[type="text"],
+#contact input[type="email"],
+#contact input[type="tel"],
+#contact input[type="url"],
+#contact textarea,
+#contact button[type="submit"] {
+  font: 400 12px/16px "Roboto", Helvetica, Arial, sans-serif;
+}
+#contact h3 {
+  display: block;
+  font-size: 30px;
+  font-weight: 300;
+  margin-bottom: 10px;
+}
+
+#contact {
+  background: #F9F9F9;
+  padding: 25px;
+  margin: 150px 0;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+
+#contact h4 {
+  margin: 5px 0 15px;
+  display: block;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+fieldset {
+  border: medium none !important;
+  margin: 0 0 10px;
+  min-width: 100%;
+  padding: 0;
+  width: 100%;
+}
+
+#contact input[type="text"],
+#contact input[type="email"],
+#contact input[type="tel"],
+#contact input[type="url"],
+#contact textarea {
+  width: 100%;
+  border: 1px solid #ccc;
+  background: #FFF;
+  margin: 0 0 5px;
+  padding: 10px;
+}
+
+#contact input[type="text"]:hover,
+#contact input[type="email"]:hover,
+#contact input[type="tel"]:hover,
+#contact input[type="url"]:hover,
+#contact textarea:hover {
+  -webkit-transition: border-color 0.3s ease-in-out;
+  -moz-transition: border-color 0.3s ease-in-out;
+  transition: border-color 0.3s ease-in-out;
+  border: 1px solid #aaa;
+}
+
+#contact textarea {
+  height: 100px;
+  max-width: 100%;
+  resize: none;
+}
+
+#contact button[type="submit"] {
+  cursor: pointer;
+  width: 100%;
+  border: none;
+  background: #4CAF50;
+  color: #FFF;
+  margin: 0 0 5px;
+  padding: 10px;
+  font-size: 15px;
+}
+
+#contact button[type="submit"]:hover {
+  background: #43A047;
+  -webkit-transition: background 0.3s ease-in-out;
+  -moz-transition: background 0.3s ease-in-out;
+  transition: background-color 0.3s ease-in-out;
+}
+
+#contact button[type="submit"]:active {
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+#contact input:focus,
+#contact textarea:focus {
+  outline: 0;
+  border: 1px solid #aaa;
+}
+
+::-webkit-input-placeholder {
+  color: #888;
+}
+
+:-moz-placeholder {
+  color: #888;
+}
+
+::-moz-placeholder {
+  color: #888;
+}
+
+:-ms-input-placeholder {
+  color: #888;
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  font-size:13px
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+  border-bottom: 3px solid #7d7d7d !important;
+  
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
+</head>
+<body>
+<div id="login_div">
+	<h4>Login page</h4>
+	<label for="email_field">Enter email:</label>
+	<input type="email" id="email_field" placeholder="example@domain.com">
+	<label for="password_field">Enter Password:</label>
+	<input type="password" id="password_field">
+	<button onclick="login()">Login</button>
+</div>
+<div class="sidebar">
+  <a  href="VPNapp.html">Application Form</a>
+  <a  class="active" href="TableList.html">Table</a>
+</div>
+<div id="user_div">
+<div class="content">
+  <form id="contact" action="formAction.php" method="get">
+
+  
+    <h1 align ="center">List of users</h1>
+    
+<h3>Applications Queue</h3>
+
+<table id="ex-table1" style="position:relative">
+  <thead>
+  <tr>
+    <th>Firstname</th>
+    <th>Surname</th>
+    <th>ID Number</th>
+    <th>Email</th>
+     <th>Cell</th>
+      <th>Phone</th>
+       <th>Address</th>
+	   <th>Manager</th>
+	   <th>System</th>
+	   <th>Period</th>
+	   <th>Reason</th>
+	   <th>Attachment</th>
+	   <th>Date Applied</th>
+	   <th>Status</th>
+  </tr>
+  </thead>
+  <tbody id="ex-table" style="border-width: 2px">
+  </tbody>
+</table>
+
+  </form>
+</div>
+</div>
+<script>
+     // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyDebqSJK9__8TKlVSD2stZy5TLQ6Pxe3Yg",
+    authDomain: "testfirebase-7e4fb.firebaseapp.com",
+    databaseURL: "https://testfirebase-7e4fb.firebaseio.com",
+    projectId: "testfirebase-7e4fb",
+    storageBucket: "testfirebase-7e4fb.appspot.com",
+    messagingSenderId: "600494932564",
+    appId: "1:600494932564:web:6a1e6b0b9859113b98e3c1"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+   var database = firebase.database();
+    database.ref('/vpnapp').on('value', function(snapshot){
+        if(snapshot.exists()){
+            var content = '';
+            snapshot.forEach(function(data){
+                var val = data.val();
+				//var d = new Date(val.date.substring(0,10));
+                content +='<tr align=center style=\'font-size:10px\'>';
+				content += '<td>' + val.firstname + '</td>';
+                content += '<td>' + val.lastname + '</td>';
+                content += '<td>' + val.idnumber + '</td>';
+                content += '<td>' + val.email + '</td>';
+                content += '<td>' + val.cell + '</td>';
+                content += '<td>' + val.phone + '</td>';
+                content += '<td>' + val.address + '</td>';
+				content += '<td>' + val.manager + '</td>';
+				content += '<td>' + val.system + '</td>';
+				content += '<td align=center>' + val.period + '</td>';
+				content += '<td>' + val.reason + '</td>';
+				content += '<td><button>Download</button></td>';
+				content += '<td>' + val.date + '</td>';
+				content += '<td>' + val.status + '</td>';
+                content += '</tr>';
+            });
+            $('#ex-table').html(content);
+        }
+    });
+
+
+</script>
+<script src="auth.js"></script>
+</body>
+</html>

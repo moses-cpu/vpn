@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<!--meta name="viewport" content="width=device-width, initial-scale=1.0"-->
+<style>
+body {
+  margin: 0;
+  font-family: "Lato", sans-serif;
+}
+.navbar {
+  overflow: hidden;
+  background-color: #333;
+  position: fixed;
+  top: 0;
+  width: 100%;
+   height: 50px
+}
+
+.navbar a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 15px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+.sidebar {
+  margin: 0;
+  padding: 0;
+  width: 200px;
+  background-color: #606060;
+  position: fixed;
+  height:100%;
+  overflow: auto;
+}
+.sidebar a {
+  display: block;
+  color: white;
+  padding: 16px;
+  text-decoration: none;
+}
+ 
+.sidebar a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.sidebar a:hover:not(.active) {
+  background-color: #555;
+  color: white;
+}
+
+div.content {
+  margin-left: 200px;
+  padding:  1px;
+  height: 1000px;
+}
+
+@media screen and (max-width: 700px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+  .sidebar a {float: left;}
+  div.content {margin-left: 0;}
+}
+
+@media screen and (max-width: 400px) {
+  .sidebar a {
+    text-align: center;
+    float: none;
+  }
+}
+.container {
+  max-width: 400px;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+}
+
+#contact input[type="text"],
+#contact input[type="email"],
+#contact input[type="tel"],
+#contact input[type="url"],
+#contact textarea,
+#contact button[type="submit"] {
+  font: 400 12px/16px "Roboto", Helvetica, Arial, sans-serif;
+}
+#contact h3 {
+  display: block;
+  font-size: 30px;
+  font-weight: 300;
+  margin-bottom: 10px;
+}
+
+#contact {
+  background: #F9F9F9;
+  padding: 25px;
+  margin: 150px 0;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+
+#contact h4 {
+  margin: 5px 0 15px;
+  display: block;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+fieldset {
+  border: medium none !important;
+  margin: 0 0 10px;
+  min-width: 100%;
+  padding: 0;
+  width: 100%;
+}
+
+#contact input[type="text"],
+#contact input[type="email"],
+#contact input[type="tel"],
+#contact input[type="url"],
+#contact textarea {
+  width: 100%;
+  border: 1px solid #ccc;
+  background: #FFF;
+  margin: 0 0 5px;
+  padding: 10px;
+}
+
+#contact input[type="text"]:hover,
+#contact input[type="email"]:hover,
+#contact input[type="tel"]:hover,
+#contact input[type="url"]:hover,
+#contact textarea:hover {
+  -webkit-transition: border-color 0.3s ease-in-out;
+  -moz-transition: border-color 0.3s ease-in-out;
+  transition: border-color 0.3s ease-in-out;
+  border: 1px solid #aaa;
+}
+
+#contact textarea {
+  height: 100px;
+  max-width: 100%;
+  resize: none;
+}
+
+#contact button[type="submit"] {
+  cursor: pointer;
+  width: 100%;
+  border: none;
+  background: #4CAF50;
+  color: #FFF;
+  margin: 0 0 5px;
+  padding: 10px;
+  font-size: 15px;
+}
+
+#contact button[type="submit"]:hover {
+  background: #43A047;
+  -webkit-transition: background 0.3s ease-in-out;
+  -moz-transition: background 0.3s ease-in-out;
+  transition: background-color 0.3s ease-in-out;
+}
+
+#contact button[type="submit"]:active {
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+#contact input:focus,
+#contact textarea:focus {
+  outline: 0;
+  border: 1px solid #aaa;
+}
+
+::-webkit-input-placeholder {
+  color: #888;
+}
+
+:-moz-placeholder {
+  color: #888;
+}
+
+::-moz-placeholder {
+  color: #888;
+}
+
+:-ms-input-placeholder {
+  color: #888;
+}
+</style>
+</head>
+<body>
+<div id="login_div">
+	<h4>Login page</h4>
+	<label for="email_field">Enter email:</label>
+	<input type="email" id="email_field" placeholder="example@domain.com">
+	<label for="password_field">Enter Password:</label>
+	<input type="password" id="password_field">
+	<button onclick="login()">Login</button>
+</div>
+
+<div class="sidebar">
+  <a class="active" href="#VPNapp.html">Application Form</a>
+  <a href="TableList.html">Table</a>
+</div>
+<div id="user_div">
+
+
+
+
+<div class="content">
+  <form id="contact">
+    <h1>Applicaton For VPN</h1>
+    <h4>Please enter personal details</h4>
+    <fieldset>
+      <input id="firstname" placeholder="Your name" name="Firstname" type="text" tabindex="1" required autofocus>
+    </fieldset>
+    <fieldset>
+      <input id="lastname" placeholder="Your Surname" name="Surname" type="text" tabindex="2" required autofocus>
+    </fieldset>
+    <fieldset>
+      <input id="phone" placeholder="Your Company name" name="Company" type="text" tabindex="3" required autofocus>
+    </fieldset>
+    <fieldset>
+      <input id="email" placeholder="Your Email Address" name="email" type="email" tabindex="4" required>
+    </fieldset>
+    <fieldset>
+      <input id="cell" placeholder="Your Phone Number (optional)" name="Phone" type="tel" tabindex="5" required>
+    </fieldset>
+    <fieldset>
+      <input id="idnumber" placeholder="Your iD Number" name="phone" type="tel" tabindex="6" required>
+    </fieldset>
+    <fieldset>
+      <input id="manager"  placeholder="Manger"  type="text" name="Manger" tabindex="7" required>
+    </fieldset>
+    <fieldset>
+      <textarea id="address" placeholder="Address details...." name="massage" tabindex="8" required></textarea>
+    </fieldset>
+	<hr>
+    <h1 align ="center">Access required To</h1>
+    <fieldset>
+      <h4>System Name</h4>
+    </fieldset>
+    <fieldset>
+      <input placeholder="Beam" id="system" type="text" tabindex="9" required autofocus>
+    </fieldset>
+    <fieldset>
+      <h4> Duration Periond</h4>
+    </fieldset>
+    <fieldset>
+      <tr>
+            <td><input type="date" tabindex="10" id="period1"></td>
+            <td><input type="date" tabindex="11" id="period2"></td>
+         </tr>
+    </fieldset>
+  
+      <textarea placeholder="Reason For the Your Applicaton...." id="reason" tabindex="12" required></textarea>
+    </fieldset>
+    <fieldset>
+      <button name="submit" onclick="addinfo()" type="submit"  data-submit="...Sending">Submit</button>
+    </fieldset>
+  </form>
+</div>
+</div>
+<script>
+     // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyDebqSJK9__8TKlVSD2stZy5TLQ6Pxe3Yg",
+    authDomain: "testfirebase-7e4fb.firebaseapp.com",
+    databaseURL: "https://testfirebase-7e4fb.firebaseio.com",
+    projectId: "testfirebase-7e4fb",
+    storageBucket: "testfirebase-7e4fb.appspot.com",
+    messagingSenderId: "600494932564",
+    appId: "1:600494932564:web:6a1e6b0b9859113b98e3c1"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+   var database = firebase.database();
+    
+function addinfo(){
+	var firstname = document.getElementById("firstname").value;
+	var lastname = document.getElementById("lastname").value;
+	var idnumber = document.getElementById("idnumber").value;
+	var email = document.getElementById("email").value;
+	var cell = document.getElementById("cell").value;
+	var phone = document.getElementById("phone").value;
+	var address = document.getElementById("address").value;
+	var status = "NotApproved"
+	var system = document.getElementById("system").value;
+	var period1 = document.getElementById("period1").value;
+	var period2 = document.getElementById("period2").value;
+	var reason = document.getElementById("reason").value;
+	addVPNUSER(firstname, lastname, idnumber, email, cell, phone,address,status,manager,system, period1, period2, reason);
+}
+function addVPNUSER(firstname, lastname, idnumber, email, cell, phone,address,status,manager,system, period1, period2, reason) {
+	var date = (new Date()).getFullYear()+"/" + (new Date()).getMonth()+"/" + (new Date()).getDate() +" " + (new Date()).getHours()+":" + (new Date()).getMinutes();
+  // A post entry.
+	var postData = {
+		firstname: firstname,
+		lastname: lastname,
+		idnumber: idnumber,
+		email: email,
+		cell: cell,
+		phone: phone,
+		address: address,
+		status:status,
+		manager:manager,
+		system:system,
+		period: period1 +" - " + period2,
+		reason:reason,
+		date: date
+		
+	};
+
+  // Get a key for a new Post.
+  var newPostKey = firebase.database().ref().child('vpnapp').push().key;
+
+  var updates = {};
+  updates['/vpnapp/' + newPostKey] = postData;
+  
+
+  return firebase.database().ref().update(updates);
+}
+</script>
+<script src="auth.js"></script>
+</body>
+</html>
+
