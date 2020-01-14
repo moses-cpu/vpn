@@ -222,7 +222,7 @@ fieldset {
       <input id="lastname" placeholder="Your Surname" name="Surname" type="text" tabindex="2" required autofocus>
     </fieldset>
     <fieldset>
-      <input id="phone" placeholder="Your Company name" name="Company" type="text" tabindex="3" required autofocus>
+      <input id="company" placeholder="Your Company name" name="Company" type="text" tabindex="3" required autofocus>
     </fieldset>
     <fieldset>
       <input id="email" placeholder="Your Email Address" name="email" type="email" tabindex="4" required>
@@ -231,7 +231,7 @@ fieldset {
       <input id="cell" placeholder="Your Phone Number (optional)" name="Phone" type="tel" tabindex="5" required>
     </fieldset>
     <fieldset>
-      <input id="idnumber" placeholder="Your iD Number" name="phone" type="tel" tabindex="6" required>
+      <input id="idnumber" placeholder="Your ID Number" name="phone" type="tel" tabindex="6" required>
     </fieldset>
     <fieldset>
       <input id="manager"  placeholder="Manger"  type="text" name="Manger" tabindex="7" required>
@@ -286,16 +286,16 @@ function addinfo(){
 	var idnumber = document.getElementById("idnumber").value;
 	var email = document.getElementById("email").value;
 	var cell = document.getElementById("cell").value;
-	var phone = document.getElementById("phone").value;
+	var company = document.getElementById("company").value;
 	var address = document.getElementById("address").value;
 	var status = "NotApproved"
 	var system = document.getElementById("system").value;
 	var period1 = document.getElementById("period1").value;
 	var period2 = document.getElementById("period2").value;
 	var reason = document.getElementById("reason").value;
-	addVPNUSER(firstname, lastname, idnumber, email, cell, phone,address,status,manager,system, period1, period2, reason);
+	addVPNUSER(firstname, lastname, idnumber, email, cell, company,address,status,manager,system, period1, period2, reason);
 }
-function addVPNUSER(firstname, lastname, idnumber, email, cell, phone,address,status,manager,system, period1, period2, reason) {
+function addVPNUSER(firstname, lastname, idnumber, email, cell, company,address,status,manager,system, period1, period2, reason) {
 	var date = (new Date()).getFullYear()+"/" + (new Date()).getMonth()+"/" + (new Date()).getDate() +" " + (new Date()).getHours()+":" + (new Date()).getMinutes();
   // A post entry.
 	var postData = {
@@ -304,7 +304,7 @@ function addVPNUSER(firstname, lastname, idnumber, email, cell, phone,address,st
 		idnumber: idnumber,
 		email: email,
 		cell: cell,
-		phone: phone,
+		company: company,
 		address: address,
 		status:status,
 		manager:manager,
