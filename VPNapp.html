@@ -2,7 +2,7 @@
 <html>
 <head>
 <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="https://firebasestorage.googleapis.com/v0/b/timecardmt.appspot.com/o/jquery.min.js?alt=media"></script>
 <!--meta name="viewport" content="width=device-width, initial-scale=1.0"-->
 <style>
 body {
@@ -203,8 +203,8 @@ fieldset {
 </div>
 
 <div class="sidebar">
-  <a class="active" href="#VPNapp.html">Application Form</a>
-  <a href="TableList.html">Table</a>
+  <a class="active" href="https://firebasestorage.googleapis.com/v0/b/timecardmt.appspot.com/o/VPNapp.html?alt=media">Application Form</a>
+  <a href="https://firebasestorage.googleapis.com/v0/b/timecardmt.appspot.com/o/TableList.html?alt=media">Table</a>
 </div>
 <div id="user_div">
 
@@ -239,6 +239,14 @@ fieldset {
     <fieldset>
       <textarea id="address" placeholder="Address details...." name="massage" tabindex="8" required></textarea>
     </fieldset>
+	<hr>
+	<br>
+	<fieldset>
+      <label for="files">Upload ZIP</label>
+	  <input type="file" onchange="previewFile()" id="files" name="files[]" multiple required />	
+	  <label id="lblprogress" for="files">0.00%</label>
+    </fieldset>
+	<br>
 	<hr>
     <h1 align ="center">Access required To</h1>
     <fieldset>
@@ -279,7 +287,7 @@ fieldset {
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
    var database = firebase.database();
-    
+    var zip;
 function addinfo(){
 	var firstname = document.getElementById("firstname").value;
 	var lastname = document.getElementById("lastname").value;
@@ -288,7 +296,7 @@ function addinfo(){
 	var cell = document.getElementById("cell").value;
 	var company = document.getElementById("company").value;
 	var address = document.getElementById("address").value;
-	var status = "NotApproved"
+	var status = "Pending"
 	var system = document.getElementById("system").value;
 	var period1 = document.getElementById("period1").value;
 	var period2 = document.getElementById("period2").value;
@@ -312,8 +320,8 @@ function addVPNUSER(firstname, lastname, idnumber, email, cell, company,address,
 		system:system,
 		period: period1 +" - " + period2,
 		reason:reason,
-		date: date
-		
+		date: date,
+		attachment:zip
 	};
 
   // Get a key for a new Post.
@@ -322,11 +330,66 @@ function addVPNUSER(firstname, lastname, idnumber, email, cell, company,address,
   var updates = {};
   updates['/vpnapp/' + newPostKey] = postData;
   
-
+  alert("Application successfully sent to Managers");
   return firebase.database().ref().update(updates);
 }
+function previewFile(){
+			var storage = firebase.storage();
+
+			var file = document.getElementById("files").files[0];
+			console.log(file);
+  
+			var storageRef = firebase.storage().ref();
+  
+			
+			var uploadImg = storage.ref().child('proof/'+file.name).put(file);
+                uploadImg.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
+                function(snapshot) {
+                    // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+                    var progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+                    console.log('Upload is ' + progress + '% done');
+					$('#lblprogress').text(progress+"% done"); 
+                    switch (snapshot.state) {
+                        case firebase.storage.TaskState.PAUSED: // or 'paused'
+                            console.log('Upload is paused');
+                            break;
+                        case firebase.storage.TaskState.RUNNING: // or 'running'
+                            console.log('Upload is running');
+                            break;
+                    }
+					
+                },
+                function (error) {
+                    switch (error.code) {
+                        case 'storage/unauthorized':
+                            // User doesn't have permission to access the object
+                            break;
+
+                        case 'storage/canceled':
+                            // User canceled the upload
+                            break;
+
+                    case 'storage/unknown':
+                    // Unknown error occurred, inspect error.serverResponse
+                    break;
+                    }
+                },
+                function() { 
+  
+               // get the uploaded image url back 
+					uploadImg.snapshot.ref.getDownloadURL().then( 
+					function(downloadURL) { 
+  
+               // You get your url from here 
+					
+					zip = downloadURL;
+					console.log('File available at', zip); 
+					
+            }); 
+          }); 
+		  }
 </script>
-<script src="auth.js"></script>
+<script src="https://firebasestorage.googleapis.com/v0/b/timecardmt.appspot.com/o/auth.js?alt=media"></script>
 </body>
 </html>
 

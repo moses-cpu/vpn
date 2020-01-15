@@ -3,7 +3,7 @@
 <html>
 <head>
 <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="https://firebasestorage.googleapis.com/v0/b/timecardmt.appspot.com/o/jquery.min.js?alt=media"></script>
 <!--meta name="viewport" content="width=device-width, initial-scale=1.0"-->
 <style>
 body {
@@ -224,8 +224,8 @@ tr:nth-child(even) {
 	<button onclick="login()">Login</button>
 </div>
 <div class="sidebar">
-  <a  href="VPNapp.html">Application Form</a>
-  <a  class="active" href="TableList.html">Table</a>
+  <a  href="https://firebasestorage.googleapis.com/v0/b/timecardmt.appspot.com/o/VPNapp.html?alt=media">Application Form</a>
+  <a  class="active" href="https://firebasestorage.googleapis.com/v0/b/timecardmt.appspot.com/o/TableList.html?alt=media">Table</a>
 </div>
 <div id="user_div">
 <div class="content">
@@ -239,7 +239,7 @@ tr:nth-child(even) {
 <table id="ex-table1" style="position:relative">
   <thead>
   <tr>
-    <th>Firstname</th>
+    <th>Name</th>
     <th>Surname</th>
     <th>ID Number</th>
     <th>Email</th>
@@ -250,8 +250,8 @@ tr:nth-child(even) {
 	   <th>System</th>
 	   <th>Period</th>
 	   <th>Reason</th>
-	   <th>Attachment</th>
-	   <th>Date Applied</th>
+	   <th>Docs</th>
+	   <th>Date</th>
 	   <th>Status</th>
   </tr>
   </thead>
@@ -294,7 +294,7 @@ tr:nth-child(even) {
 				content += '<td>' + val.system + '</td>';
 				content += '<td align=center>' + val.period + '</td>';
 				content += '<td>' + val.reason + '</td>';
-				content += '<td><button>Download</button></td>';
+				content += '<td><a  target="_blank" href="'+val.attachment+'" style="padding:0px;font-size:12px;font-style:bold;">View</a></td>';
 				content += '<td>' + val.date + '</td>';
 				content += '<td>' + val.status + '</td>';
                 content += '</tr>';
@@ -305,6 +305,6 @@ tr:nth-child(even) {
 
 
 </script>
-<script src="auth.js"></script>
+<script src="https://firebasestorage.googleapis.com/v0/b/timecardmt.appspot.com/o/auth.js?alt=media"></script>
 </body>
 </html>
